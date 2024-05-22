@@ -11,9 +11,12 @@ public class TongHop {
 			System.out.println("1: Cộng Trừ nhân chia");
 			System.out.println("2: Xếp loại học lực");
 			System.out.println("3: Viết bảng cửu chương ");
-			System.out.println("4:UCLN & BCNN 2 số:");
+			System.out.println("4: UCLN & BCNN 2 số:");
 			System.out.println("5: Sắp xếp mảng: ");
 			System.out.println("6: Nhập mảng 2 chiều: ");
+			System.out.println("7: Tính tổng các phần tử trong ma trận: ");
+			System.out.println("8: Tìm phần tử lớn nhất vào nhỏ nhất trong ma trận ");
+			System.out.println("9: Nhập mảng 2 chiều: ");
 			System.out.println("0: Thoát chương trình");
 			System.out.println("---------------------------------");
 			Scanner sc = new Scanner(System.in);
@@ -44,6 +47,14 @@ public class TongHop {
 			case 6:
 				System.out.println("Nhập mảng 2 chiều: ");
 				nhapmang2chieu();
+				break;
+			case 7:
+				System.out.println("Tính tổng ma trận: ");
+				tinhtongmatran();
+				break;
+			case 8:
+				System.out.println("Tìm số lớn nhất và số nhỏ nhất trong ma trận: ");
+				timSLN_SNN();
 				break;
 			case 0:
 				System.out.println("Chương trình đã kết thúc");
@@ -126,20 +137,28 @@ public class TongHop {
 	}
 
 	public static void UCLN_BCLN() {
-//		System.out.println("Nhập vào số m: ");
-//		Scanner sc = new Scanner(System.in);
-//		int m = sc.nextInt();
-//		System.out.println("Nhập vào số m: ");
-//		int n = sc.nextInt();
-//		while (m != n) {
-//			if (m > n)
-//				m = m - n;
-//			else
-//				n = n - m;
-//		}
-//		int ucln = UCLN(m, n);
-//		int bcln = ((m * n) / ucln(m, n));
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Nhập số thứ nhất: ");
+		int num1 = sc.nextInt();
+		System.out.print("Nhập số thứ hai: ");
+		int num2 = sc.nextInt();
 
+		int originalNum1 = num1; // Lưu giá trị gốc của num1
+		int originalNum2 = num2; // Lưu giá trị gốc của num2
+
+		// Tính ƯCLN sử dụng thuật toán Euclid
+		while (num1 != num2) {
+			if (num1 > num2)
+				num1 = num1 - num2;
+			else
+				num2 = num2 - num1;
+		}
+		int ucln = num1; // Hoặc num2, vì khi kết thúc vòng lặp num1 và num2 sẽ bằng nhau
+		System.out.printf("Ước chung lớn nhất là: %d\n", ucln);
+
+		// Tính BCNN dựa trên ƯCLN
+		int bcln = (originalNum1 * originalNum2) / ucln;
+		System.out.printf("Bội chung nhỏ nhất là: %d\n", bcln);
 	}
 
 	public static void sapxepmang() {
@@ -192,5 +211,65 @@ public class TongHop {
 			// sau khi viết xong 1 dòng thi xuống hàng
 			System.out.println("\n");
 		}
+	}
+
+	public static void tinhtongmatran() {
+		Scanner sc = new Scanner(System.in);
+
+		System.out.print("Nhập số hàng của ma trận: ");
+		int rows = sc.nextInt();
+		System.out.print("Nhập số cột của ma trận: ");
+		int cols = sc.nextInt();
+
+		int[][] matrix = new int[rows][cols];
+		System.out.println("Nhập các phần tử của ma trận:");
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				matrix[i][j] = sc.nextInt();
+			}
+		}
+
+		int sum = 0;
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				sum += matrix[i][j];
+			}
+		}
+
+		System.out.println("Tổng các phần tử của ma trận là: " + sum);
+	}
+
+	public static void timSLN_SNN() {
+		Scanner sc = new Scanner(System.in);
+
+		System.out.print("Nhập số hàng của ma trận: ");
+		int rows = sc.nextInt();
+		System.out.print("Nhập số cột của ma trận: ");
+		int cols = sc.nextInt();
+
+		int[][] matrix = new int[rows][cols];
+		System.out.println("Nhập các phần tử của ma trận:");
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				matrix[i][j] = sc.nextInt();
+			}
+		}
+
+		int max = matrix[0][0];
+		int min = matrix[0][0];
+
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				if (matrix[i][j] > max) {
+					max = matrix[i][j];
+				}
+				if (matrix[i][j] < min) {
+					min = matrix[i][j];
+				}
+			}
+		}
+
+		System.out.println("Phần tử lớn nhất trong ma trận là: " + max);
+		System.out.println("Phần tử nhỏ nhất trong ma trận là: " + min);
 	}
 }
